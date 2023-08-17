@@ -8,35 +8,53 @@ import androidx.lifecycle.viewModelScope
 import com.example.movieapp.core.domain.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(val repository: MovieRepository): ViewModel() {
+class HomeViewModel @Inject constructor(private val repository: MovieRepository): ViewModel() {
 
     var state by mutableStateOf(HomeState())
         private set
 
     init {
         state = state.copy(isLoading = true)
-        getUpcomingMovies()
+        viewModelScope.launch {
+            supervisorScope {
 
+                //This is for running to courutines at the same time, but in just one
+                val upcoming = launch { getUpcomingMovies() }
+                val popular = launch { getPopularMovies() }
 
+                listOf(upcoming, popular).forEach { it.join() }
+                state = state.copy(isLoading = false)
+
+            }
+        }
     }
 
-    private fun  getUpcomingMovies() {
+    private suspend fun getUpcomingMovies() {
 
-        viewModelScope.launch {
+        repository.getUpcomingMovies().onSuccess {
+            state = state.copy(
+                upcoming = it
+            )
 
-            repository.getUpcomingMovies().onSuccess {
-                state = state.copy(
-                    upcoming = it
-                )
+        }.onFailure {
+            println()
+        }
+    }
 
-            }.onFailure {
-                println()
-            }
-            state = state.copy(isLoading = false)
+    private suspend fun  getPopularMovies() {
+
+        repository.getPopularMovies().onSuccess {
+            state = state.copy(
+                popularMovies = it
+            )
+
+        }.onFailure {
+            println()
         }
     }
 }

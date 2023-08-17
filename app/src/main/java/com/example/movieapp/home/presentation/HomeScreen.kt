@@ -2,6 +2,7 @@ package com.example.movieapp.home.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -51,7 +52,18 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         if (state.upcoming.isNotEmpty()) {
             item {
 
-                HomeMovieList("Upcoming movies", posters = state.upcoming.map { it.poster })
+                HomeMovieList("Upcoming Movies", posters = state.upcoming.map { it.poster })
+            }
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(26.dp))
+        }
+
+        if (state.popularMovies.isNotEmpty()) {
+            item {
+
+                HomeMovieList("Popular", posters = state.popularMovies.map { it.poster })
             }
         }
     }

@@ -7,6 +7,7 @@ import com.example.movieapp.core.domain.model.Movie
 fun MovieResult.toDomain(): Movie {
 
     return Movie(
+        id = this.id,
         description = this.overview,
         title = this.title,
         releaseYear = this.release_date.substring(0,4).toInt(),

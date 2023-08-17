@@ -16,10 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.movieapp.core.domain.model.Movie
 
 @Composable
@@ -36,7 +38,10 @@ fun HomeMovieList(title: String, posters: List<String>, modifier: Modifier = Mod
 
             items(posters) {
                 AsyncImage(
-                    model = it,
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(it)
+                        .crossfade(true)
+                        .build(),
                     contentDescription = "poster",
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))

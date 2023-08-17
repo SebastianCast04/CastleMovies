@@ -12,4 +12,7 @@ interface MovieApi {
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(): MovieDtoResponse
+
+    @GET("movie/popular")
+    suspend fun getPopularMovies(): MovieDtoResponse
 }
