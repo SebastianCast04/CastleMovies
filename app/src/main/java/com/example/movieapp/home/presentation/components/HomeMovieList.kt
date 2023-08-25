@@ -29,7 +29,7 @@ fun HomeMovieList(title: String, posters: List<String>, modifier: Modifier = Mod
 
     Column(modifier = modifier) {
 
-        Text(text = title, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color = Color.White)
+        Titles(title)
         Spacer(modifier = Modifier.height(20.dp))
         LazyRow(
             modifier = Modifier.fillMaxWidth(),

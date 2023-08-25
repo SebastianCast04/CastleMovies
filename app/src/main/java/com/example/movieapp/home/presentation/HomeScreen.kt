@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.movieapp.R
 import com.example.movieapp.home.presentation.components.HomeMovieList
+import com.example.movieapp.home.presentation.components.RecommendedForYou
+import com.example.movieapp.home.presentation.components.Titles
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -64,6 +66,19 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             item {
 
                 HomeMovieList("Popular", posters = state.popularMovies.map { it.poster })
+            }
+        }
+        
+        item { 
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        item { 
+            
+            RecommendedForYou(selectedFilterType = state.selectedFilter, onFilterClick = {
+                viewModel.onEvent(HomeEvent.ChangeFitler(it))
+            }, movieList = state.filteredMovies){
+
             }
         }
     }
