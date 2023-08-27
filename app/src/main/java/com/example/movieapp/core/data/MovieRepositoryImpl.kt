@@ -19,4 +19,18 @@ class MovieRepositoryImpl(private val api: MovieApi): MovieRepository {
         val results = api.getPopularMovies().results
         results.map { it.toDomain() }
     }
+
+    override suspend fun getMoviesByGenreHorror(with_genre: Int) = resultOf {
+
+        val results = api.getMoviesByGenreHorror(with_genre).results
+        results.map { it.toDomain() }
+    }
+
+    override suspend fun getMoviesByGenreAnimation(with_genres: Int) = resultOf {
+
+        val results = api.getMoviesByGenreAnimation(with_genres).results
+        results.map { it.toDomain() }
+    }
+
+
 }

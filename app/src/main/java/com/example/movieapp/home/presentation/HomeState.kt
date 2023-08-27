@@ -6,7 +6,7 @@ data class HomeState(
     val upcoming: List<Movie> = emptyList(),
     val popularMovies: List<Movie> = emptyList(),
     val isLoading: Boolean = false,
-    val selectedFilter: FilterType = FilterType.SPANISH,
+    val selectedFilter: FilterType = FilterType.HORROR,
     val filteredMovies: List <Movie> = emptyList()
 
 )

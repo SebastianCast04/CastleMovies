@@ -26,8 +26,9 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
                 //This is for running to courutines at the same time, but in just one
                 val upcoming = launch { getUpcomingMovies() }
                 val popular = launch { getPopularMovies() }
+                val filtered = launch { getMoviesByFilter() }
 
-                listOf(upcoming, popular).forEach { it.join() }
+                listOf(upcoming, popular, filtered).forEach { it.join() }
                 state = state.copy(isLoading = false)
 
             }
@@ -43,6 +44,9 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
                     state = state.copy(
                         selectedFilter = event.filterType
                     )
+                    viewModelScope.launch {
+                        getMoviesByFilter()
+                    }
                 }
 
             }
@@ -72,5 +76,25 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
         }.onFailure {
             println()
         }
+    }
+
+    private suspend fun getMoviesByFilter(){
+
+        val result = when (state.selectedFilter){
+            FilterType.HORROR -> repository.getMoviesByGenreHorror(27)
+            FilterType.YEAR -> repository.getMoviesByGenreAnimation(16)
+        }
+
+        result.onSuccess {
+
+            state = state.copy(
+                filteredMovies = it
+            )
+
+        }.onFailure {
+            println()
+        }
+
+
     }
 }
