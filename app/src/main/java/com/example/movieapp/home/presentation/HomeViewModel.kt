@@ -44,6 +44,7 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
                     state = state.copy(
                         selectedFilter = event.filterType
                     )
+                    // Brings the movies when the filter is changed
                     viewModelScope.launch {
                         getMoviesByFilter()
                     }
@@ -88,7 +89,7 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
         result.onSuccess {
 
             state = state.copy(
-                filteredMovies = it
+                filteredMovies = it //it.subList(0..6) filter de recommended movies by just 6
             )
 
         }.onFailure {

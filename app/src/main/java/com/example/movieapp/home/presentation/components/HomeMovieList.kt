@@ -37,17 +37,8 @@ fun HomeMovieList(title: String, posters: List<String>, modifier: Modifier = Mod
         ) {
 
             items(posters) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(it)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = "poster",
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .size(width = 138.dp, height = 180.dp),
-                    contentScale = ContentScale.Crop
-                )
+
+                HomeMoviePoster(it, MoviePosterSize.SMALL)
             }
         }
 

@@ -15,12 +15,8 @@ import com.example.movieapp.home.presentation.FilterType
 fun RecommendedForYou(
     selectedFilterType: FilterType,
     onFilterClick: (FilterType) -> Unit,
-    movieList: List<Movie>,
-    modifier: Modifier = Modifier,
-    onMovieClick: (Movie)  -> Unit
+    modifier: Modifier = Modifier
 ) {
-
-    if (movieList.isNotEmpty()){
 
         Column(modifier = modifier.fillMaxWidth()) {
 
@@ -32,7 +28,5 @@ fun RecommendedForYou(
                 selectedFilter = selectedFilterType,
                 onFilterClick = onFilterClick
             )
-
         }
-    }
 }
