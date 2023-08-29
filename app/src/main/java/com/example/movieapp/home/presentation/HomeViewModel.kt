@@ -67,13 +67,11 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
 
     private suspend fun  getPopularMovies() {
 
-        repository.getPopularMovies().onSuccess {
+        repository.getPopularMovies().collect {
             state = state.copy(
                 popularMovies = it
             )
 
-        }.onFailure {
-            println()
         }
     }
 
@@ -84,16 +82,13 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
             FilterType.YEAR -> repository.getMoviesByGenreAnimation(16)
         }
 
-        result.onSuccess {
+        result.collect {
 
-            state = state.copy(
-                filteredMovies = it //it.subList(0..6) filter de recommended movies by just 6
-            )
-
-        }.onFailure {
-            println()
+            if (it.isNotEmpty()) {
+                state = state.copy(
+                    filteredMovies = it //it.subList(0..6) filter de recommended movies by just 6
+                )
+            }
         }
-
-
     }
 }
