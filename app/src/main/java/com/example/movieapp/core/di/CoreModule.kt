@@ -9,6 +9,7 @@ import com.example.movieapp.core.data.remote.MovieApi
 import com.example.movieapp.core.data.remote.interceptors.ApiKeyInterceptor
 import com.example.movieapp.core.domain.model.Movie
 import com.example.movieapp.core.domain.repository.MovieRepository
+import com.example.movieapp.core.domain.usecase.FilteringMovies
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,6 +55,6 @@ object CoreModule {
     @Provides
     fun providesRepository(api: MovieApi, dao: MovieDao): MovieRepository {
 
-        return MovieRepositoryImpl(api, dao)
+        return MovieRepositoryImpl(api, dao, FilteringMovies())
     }
 }
